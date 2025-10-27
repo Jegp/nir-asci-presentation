@@ -56,22 +56,22 @@ Structure:
             </section>
             <section>
               <h2>Agenda</h2>
-              <ul class="fragment">
-                <li>Approaches to neuromorphic toolchains</li>
-                <li>Introduction to NIR</li>
+              <ol>
+                <li>Current neuromorphic toolchains</li>
+                <li>The Neuromorphic Intermediate Representation (NIR)</li>
                 <li>Motivating work: NIR &rarr; FPGA Compiler</li>
                 <li>Compilation Demonstration</li>
-              </ul>
+              </ol>
             </section>
             <section>
                 <section>
-                    <h1>Approaches to neuromorphic toolchains</h1>
+                    <h1>Current neuromorphic toolchains</h1>
                 </section>
                 <section>
                   <h2><u> Neuromorphic Toolchains: What do they do?</u> </h2>
                   <div style="height:0.5cm"></div>
                   <center>
-                    <em>A neuromorphic toolchain describes the processes involved in transforming the idea of an algorithm to its execution on a given hardware platform.</em>
+                    <em>A neuromorphic toolchain describes the processes involved in transforming the idea of an algorithm to its execution on hardware.</em>
                   </center>
                   <div style="height:1.0cm"></div>
 
@@ -123,7 +123,7 @@ Structure:
                 <section>
                   <h2><u> Hardware Representation</u> </h2>
                   <div style="height:0.2cm"></div>
-                  <p> If your simulator was built for your hardware, you're in a good position.. </p>
+                  <p> If your simulator was built for your hardware, you're in a good position. </p>
                   <!-- Row 1: Sinabs → Speck -->
                   <div style="display: flex; align-items: center; gap: 0rem; margin: 0.3rem 0;">
                     <div style="flex: 1; text-align: center;">
@@ -168,7 +168,82 @@ Structure:
                     <li class="fragment"> &hellip; </li>
                   </ul>
                   <div style="height:0.5cm"></div>
-                  <p> You're stuck! You need to either port your code to another one
+                  <p class="fragment"> You're stuck! Porting your code is costly and unreliable.
+                </section>
+
+                <section>
+                  <h2><u> Why? </u> </h2>
+                  <img src="img/fig.png" alt="paper" style="width: auto; height: 150mm; max-height: 100%;">
+                  <p> Frenkel, Charlotte, David Bol, and Giacomo Indiveri. "Bottom-up and top-down approaches for the design of neuromorphic processing systems: Tradeoffs and synergies between natural and artificial intelligence." Proceedings of the IEEE 111.6 (2023): 623-652. </p>
+                </section>
+
+                <section>
+                  <h2><u> Bottom-Up Hardware </u> </h2>
+                  <div style="height:0.5cm"></div>
+                  <p> Most common, at many different scales & types. </p>
+                  <div style="display: flex; gap: 2rem; align-items: flex-start;">
+                    <!-- Column 1 -->
+                    <div class="fragment" data-fragment-index="1" style="flex: 1; text-align: center;">
+                      <img src="img/memristor.png" alt="Image 1" style="width: 100%; max-width: 500px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">
+                      <p style="font-size: 0.9em; margin: 0.5rem 0;">Analogue Memristor Arrays <br> (1024 synapses)</p>
+                      <p style="font-size: 0.7em; color: #666; margin: 0;">Ongoing work at University of Southampton</p>
+                    </div>
+
+                    <!-- Dividing line 1 -->
+                    <div style="width: 2px; background: #ccc;"></div>
+
+                    <!-- Column 2 -->
+                    <div class="fragment" data-fragment-index="2" style="flex: 1; text-align: center;">
+                      <img src="img/odin.png" alt="Image 2" style="width: 100%; max-width: 500px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">
+                      <p style="font-size: 0.9em; margin: 0.5rem 0;">ODIN on ASIC <br> (64k synapses, 256 neurons)</p>
+                      <p style="font-size: 0.7em; color: #666; margin: 0;">Frenkel, Charlotte, et al. "A 0.086-mm&sup2; 12.7-pJ/SOP 64k-synapse 256-neuron online-learning digital spiking neuromorphic processor in 28-nm CMOS." IEEE transactions on biomedical circuits and systems 13.1 (2018): 145-158.</p>
+                    </div>
+
+                    <!-- Dividing line 2 -->
+                    <div style="width: 2px; background: #ccc;"></div>
+
+                    <!-- Column 3 -->
+                    <div class="fragment" data-fragment-index="3" style="flex: 1; text-align: center;">
+                      <img src="img/spinnbig.jpg" alt="Image 3" style="width: 100%; max-width: 700px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">
+                      <p style="font-size: 0.9em; margin: 0.5rem 0;">SpiNNaker with ARM <br> (up to 1B neurons & 1T synapses)</p>
+                      <p style="font-size: 0.7em; color: #666; margin: 0;">Furber, Steve B., et al. "The spinnaker project." Proceedings of the IEEE 102.5 (2014): 652-665.</p>
+                    </div>
+                  </div>
+                </section>
+
+                <section>
+                  <h2><u> Top-Down </u> </h2>
+                  <p> Dedicated & optimized to a specific algorithm. </p>
+                  <div style="display: flex; gap: 2rem; align-items: flex-start;">
+                    <!-- Column 1 -->
+                    <div class="fragment" data-fragment-index="1" style="flex: 1; text-align: center;">
+                      <img src="img/speck1.png" alt="Image 1" style="width: 100%; max-width: 500px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">                      <p style="font-size: 0.9em; margin: 0.5rem 0;">SPECK <br> Spiking CNN for Sinabs </p>
+                      <p style="font-size: 0.6em; color: #666; margin: 0;">Richter, Ole, et al. "Speck: A smart event-based vision sensor with a low latency 327k neuron convolutional neuronal network processing pipeline." arXiv preprint arXiv:2304.06793 (2023).
+</p>
+                    </div>
+
+                    <!-- Dividing line 1 -->
+                    <div style="width: 2px; background: #ccc;"></div>
+
+                    <div class="fragment" data-fragment-index="2" style="flex: 1; text-align: center;">
+                      <img src="img/spoon.png" alt="Image 1" style="width: 100%; max-width: 500px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">                      <p style="font-size: 0.9em; margin: 0.5rem 0;">SPOON <br> Spiking CNN with RTDP Learning</p>
+                      <p style="font-size: 0.6em; color: #666; margin: 0;">Frenkel, Charlotte, Jean-Didier Legat, and David Bol. "A 28-nm convolutional neuromorphic processor enabling online learning with spike-based retinas." 2020 IEEE International Symposium on Circuits and Systems (ISCAS). IEEE, 2020.</p>
+                    </div>
+
+                    <!-- Dividing line 2 -->
+                    <div style="width: 2px; background: #ccc;"></div>
+
+
+                    <div class="fragment" data-fragment-index="3" style="flex: 1; text-align: center;">
+                      <img src="img/braindrop.png" alt="Image 1" style="width: 100%; max-width: 800px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">                      <p style="font-size: 0.9em; margin: 0.5rem 0;">BrainDrop <br> Mixed-Signal Neural Engineering Framework (NEF) Accelerator</p>
+                      <p style="font-size: 0.6em; color: #666; margin: 0;">Neckar, Alexander, et al. "Braindrop: A mixed-signal neuromorphic architecture with a dynamical systems-based programming model." Proceedings of the IEEE 107.1 (2018): 144-164.</p>
+                    </div>
+
+
+                  </div>
+                </section>
+                <section>
+                  With all this variety of backgrounds and paradigms, how could you unify the neuromorphic acceleration in the same way as ONNX has in machine learning?
                 </section>
             </section>
             <section>
