@@ -110,32 +110,32 @@ Structure:
                   </center>
                   <div style="height:1.0cm"></div>
 
-                    <div style="display: flex; gap: 2em; align-items: flex-start;">
-                        <div style="flex: 1;">
-                            <div style="text-align: left;">
-                                <p class="fragment" data-fragment-index="2">Typically, they encode three important
-                                    parts:</p>
-                                <ol style="margin-left: 0; padding-left: 2em;">
-                                    <li class="fragment" data-fragment-index="3">Network Conception and Simulation.</li>
-                                    <li class="fragment" data-fragment-index="4">Translation to Hardware Representation.
-                                    </li>
-                                    <li class="fragment" data-fragment-index="5">Hardware Execution.</li>
-                                </ol>
-                            </div>
-                        </div>
-                        <div
-                            style="flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                            <img class="fragment" data-fragment-index="3" src="img/brain.svg" alt="Absrtract brain"
-                                style="width: 50%; max-width: 300px;">
-                            <span class="fragment" data-fragment-index="4"
-                                style="font-size: 3em; margin: 0 10px;">&#8594;</span>
-                            <img class="fragment" data-fragment-index="4" src="img/square.svg" alt="Square wave"
-                                style="width: 50%; max-width: 300px;">
-                            <span class="fragment" data-fragment-index="5"
-                                style="font-size: 3em; margin: 0 10px;">&#8594;</span>
-                            <img class="fragment" data-fragment-index="5" src="img/hardware.svg" alt="Hardware"
-                                style="width: 50%; max-width: 300px;">
-                        </div>
+                  <div style="display: flex; gap: 2em; align-items: flex-start;">
+                    <div style="flex: 1;">
+                      <div style="text-align: left;">
+                        <p class="fragment" data-fragment-index="2">Typically, they encode three important
+                          parts:</p>
+                        <ol style="margin-left: 0; padding-left: 2em;">
+                          <li class="fragment" data-fragment-index="3">Network Conception and Simulation.</li>
+                          <li class="fragment" data-fragment-index="4">Translation to Hardware Representation.
+                          </li>
+                          <li class="fragment" data-fragment-index="5">Hardware Execution.</li>
+                        </ol>
+                      </div>
+                    </div>
+                    <div
+                      style="flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                      <img class="fragment" data-fragment-index="3" src="img/brain.svg" alt="Absrtract brain"
+                           style="width: 50%; max-width: 300px;">
+                      <span class="fragment" data-fragment-index="4"
+                            style="font-size: 3em; margin: 0 10px;">&#8594;</span>
+                      <img class="fragment" data-fragment-index="4" src="img/square.svg" alt="Square wave"
+                           style="width: 50%; max-width: 300px;">
+                      <span class="fragment" data-fragment-index="5"
+                            style="font-size: 3em; margin: 0 10px;">&#8594;</span>
+                      <img class="fragment" data-fragment-index="5" src="img/hardware.svg" alt="Hardware"
+                           style="width: 50%; max-width: 300px;">
+                    </div>
                 </section>
                 <section>
                     <h2><u> Network Simulators</u> </h2>
@@ -424,30 +424,101 @@ Structure:
                 <!-- Existing Platforms + Future Work -->
             </section>
             <section>
-                <section>
-                    <h2>Motivating a NIR &rarr; FPGA compiler</h2>
-                </section>
+              <section>
+                <h2>Our work: NIR &rarr; FPGA Compiler</h2>
+              </section>
+
+              <section>
+                <h2><u> So let's say you want to make an SNN accelerator.</u> </h2>
+                <div style="height:0.5cm"></div>
+                <ol>
+                  <li class="fragment"> Most novel work on digital accelerators begins like this.
+                  <li class="fragment"> You make architectural decisions you are interested and qualified to answer.
+                  <li class="fragment"> Until you come to a nuanced decision,
+                  <li class="fragment"> How would someone use this?
+                    <ul>
+                      <li class="fragment"> What neuron models am I supporting?
+                      <li class="fragment"> What integration method am I using?
+                      <li class="fragment"> What interconnectivity must it have?
+                      <li class="fragment"> What simulator am I assuming?
+                      <li class="fragment"> What problems does that simulator have?
+                      <li class="fragment"> How am I going to compare this to another design?
+                      <li class="fragment"> How am I verifying my design?
+                      <li class="fragment"> ...
+                    </ul>
+                  <li class="fragment"> Huge barrier for hardware engineers.
+                </ol>
+              </section>
+              <section>
+                <h2><u> Why not just use NIR? </u> </h2>
+                <div style="height:1cm"></div>
+                <div style="display: flex; gap: 2em; align-items: flex-start;">
+                  <div style="flex: 1;">
+                    <div style="text-align: left;">
+                      <ol style="margin-left: 0; padding-left: 2em;">
+                        <li class="fragment" data-fragment-index="2"> Conventionally, you base your hardware on some discretization, and then hope your simulator's equations have a sufficient mapping.
+                        <li class="fragment"> By basing your hardware off NIR, you get
+                          <ul>
+                            <li class="fragment"> Ready-made parameter format (weights, threshold, etc.).
+                            <li class="fragment"> Specification of component computations (primitives).
+                            <li class="fragment"> Specification of data flow (graph).
+                            <li class="fragment"> Language to describe required and implemented functionality.
+                          </ul>
+                        <li class="fragment"> As NIR is in continuous space, we just need to fill in a few concrete bits.
+                          <ul>
+                            <li class="fragment"> Quantization of data & parameters.
+                            <li class="fragment"> Inputs and outputs of a reference simulator for <em>equivalence verification</em>.
+                          </ul>
+                      </ol>
+                    </div>
+                  </div>
+                  <div style="flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center; height: 100vh;">
+                    <img  class="fragment" data-fragment-index="2" src="img/flow.svg" alt="" style="width: 1000px">
+                  </div>
+              </section>
+                            <section>
+                <h2><u> The inside of a NIR file </u> </h2>
+                <span style="color:red">TODO</span>
+              </section>
+              <section>
+                <h2><u> Using Primitives as a specification </u> </h2>
+                <span style="color:red">TODO</span>
+              </section>
+              <section>
+                <h2><u> How the graph describes computation? </u> </h2>
+                <span style="color:red">TODO</span>
+              </section>
+              <section>
+                <h2><u> Using NIR to communicate your hardware's capabilities </u> </h2>
+                <span style="color:red">TODO</span>
+              </section>
+            <section>
+              <h2><u> Our Compiler and Toolchain </u> </h2>
+              <img  src="img/new-toolchain.svg" alt="" style="width: 2000px">
+            </section>
+
             </section>
             <section>
-                <section>
-                    <h2>Compilation demonstration</h2>
-                </section>
+              <section>
+                <h2>Compilation demonstration</h2>
+              </section>
             </section>
-        </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/markdown/markdown.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/highlight.js"></script>
-    <script>
-        Reveal.initialize({
-            hash: true,
-            plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
-            width: 1920,
-            height: 1080
-        });
-    </script>
+            </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/markdown/markdown.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/highlight.js"></script>
+            <script>
+              Reveal.initialize({
+                  hash: true,
+                  plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+                  width: 1920,
+                  height: 1080
+              });
+            </script>
 </body>
 
 </html>
