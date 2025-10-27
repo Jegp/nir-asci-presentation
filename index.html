@@ -8,6 +8,40 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/monokai.css">
+
+    <style>
+        .ecosystem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .platform-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .timeline-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .timeline-arrow {
+            font-size: 2rem;
+            color: #667eea;
+        }
+    </style>
 </head>
 
 <!--
@@ -46,17 +80,18 @@ Structure:
        - [2] Compilation & traces
        - [3] Oops, it should have been 20 neurons (sinabs -> compile -> traces)
   -->
+
 <body>
     <div class="reveal">
         <div class="slides">
             <section>
-                <h1>Introduction to co-design for on-device learning</h1>
+                <h1>Introduction to co-design <br /> for on-device learning</h1>
                 <h4>Michail Rontionov, University of Southhampton</h4>
                 <h4>Jens E. Pedersen, Technical University of Denmark</h4>
             </section>
             <section>
               <h2>Agenda</h2>
-              <ol>
+              <ol style="font-size: 150%;">
                 <li>Current neuromorphic toolchains</li>
                 <li>The Neuromorphic Intermediate Representation (NIR)</li>
                 <li>Motivating work: NIR &rarr; FPGA Compiler</li>
@@ -75,50 +110,64 @@ Structure:
                   </center>
                   <div style="height:1.0cm"></div>
 
-                  <div style="display: flex; gap: 2em; align-items: flex-start;">
-                  <div style="flex: 1;">
-                    <div style="text-align: left;">
-                      <p class="fragment" data-fragment-index="2">Typically, they encode three important parts:</p>
-                      <ol style="margin-left: 0; padding-left: 2em;">
-                        <li class="fragment" data-fragment-index="3">Network Conception and Simulation.</li>
-                        <li class="fragment" data-fragment-index="4">Translation to Hardware Representation.</li>
-                        <li class="fragment" data-fragment-index="5">Hardware Execution.</li>
-                      </ol>
-                    </div>
-                  </div>
-                  <div style="flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                    <img class="fragment" data-fragment-index="3" src="img/brain.svg" alt="Absrtract brain" style="width: 50%; max-width: 300px;">
-                    <span class="fragment" data-fragment-index="4" style="font-size: 3em; margin: 0 10px;">&#8594;</span>
-                    <img class="fragment" data-fragment-index="4" src="img/square.svg" alt="Square wave" style="width: 50%; max-width: 300px;">
-                    <span class="fragment" data-fragment-index="5" style="font-size: 3em; margin: 0 10px;">&#8594;</span>
-                    <img class="fragment" data-fragment-index="5" src="img/hardware.svg" alt="Hardware" style="width: 50%; max-width: 300px;">
-                  </div>
+                    <div style="display: flex; gap: 2em; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <div style="text-align: left;">
+                                <p class="fragment" data-fragment-index="2">Typically, they encode three important
+                                    parts:</p>
+                                <ol style="margin-left: 0; padding-left: 2em;">
+                                    <li class="fragment" data-fragment-index="3">Network Conception and Simulation.</li>
+                                    <li class="fragment" data-fragment-index="4">Translation to Hardware Representation.
+                                    </li>
+                                    <li class="fragment" data-fragment-index="5">Hardware Execution.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div
+                            style="flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                            <img class="fragment" data-fragment-index="3" src="img/brain.svg" alt="Absrtract brain"
+                                style="width: 50%; max-width: 300px;">
+                            <span class="fragment" data-fragment-index="4"
+                                style="font-size: 3em; margin: 0 10px;">&#8594;</span>
+                            <img class="fragment" data-fragment-index="4" src="img/square.svg" alt="Square wave"
+                                style="width: 50%; max-width: 300px;">
+                            <span class="fragment" data-fragment-index="5"
+                                style="font-size: 3em; margin: 0 10px;">&#8594;</span>
+                            <img class="fragment" data-fragment-index="5" src="img/hardware.svg" alt="Hardware"
+                                style="width: 50%; max-width: 300px;">
+                        </div>
                 </section>
                 <section>
-                  <h2><u> Network Simulators</u> </h2>
-                  <div style="height:0.2cm"></div>
-                  <p> The one you pick typically depends on where you're coming from. </p>
-                  <div style="height:0.6cm"></div>
-                  <div style="display: flex; gap: 2rem; align-items: stretch;">
-                    <!-- Left column -->
-                    <div class="fragment" data-fragment-index="1" style="flex: 1; text-align: center;">
-                      <h4>Neuro-science</h4>
-                      <img src="img/brian.png" alt="Image 1" style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
-                      <img src="img/nengo.svg" alt="Image 2" style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
-                    </div>
+                    <h2><u> Network Simulators</u> </h2>
+                    <div style="height:0.2cm"></div>
+                    <p> The one you pick typically depends on where you're coming from. </p>
+                    <div style="height:0.6cm"></div>
+                    <div style="display: flex; gap: 2rem; align-items: stretch;">
+                        <!-- Left column -->
+                        <div class="fragment" data-fragment-index="1" style="flex: 1; text-align: center;">
+                            <h4>Neuro-science</h4>
+                            <img src="img/brian.png" alt="Image 1"
+                                style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
+                            <img src="img/nengo.svg" alt="Image 2"
+                                style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
+                        </div>
 
-                    <!-- Dividing line -->
-                    <div style="width: 2px; background: #ccc; margin: 0 1rem;"></div>
+                        <!-- Dividing line -->
+                        <div style="width: 2px; background: #ccc; margin: 0 1rem;"></div>
 
-                    <!-- Right column -->
-                    <div class="fragment" data-fragment-index="2" style="flex: 1; text-align: center;">
-                      <h4>Machine Learning</h4>
-                      <img src="img/sinabs.webp" alt="Image 1" style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
-                      <img src="img/norse.png" alt="Image 1" style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
-                      <img src="img/lava.png" alt="Image 1" style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
-                      <img src="img/pynn.png" alt="Image 1" style="width: 30mm; max-width: 100%; margin: 1rem auto; display: block;">
+                        <!-- Right column -->
+                        <div class="fragment" data-fragment-index="2" style="flex: 1; text-align: center;">
+                            <h4>Machine Learning</h4>
+                            <img src="img/sinabs.webp" alt="Image 1"
+                                style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
+                            <img src="img/norse.png" alt="Image 1"
+                                style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
+                            <img src="img/lava.png" alt="Image 1"
+                                style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
+                            <img src="img/pynn.png" alt="Image 1"
+                                style="width: 30mm; max-width: 100%; margin: 1rem auto; display: block;">
+                        </div>
                     </div>
-                  </div>
                 </section>
                 <section>
                   <h2><u> Hardware Representation</u> </h2>
@@ -129,31 +178,27 @@ Structure:
                     <div style="flex: 1; text-align: center;">
                       <img src="img/sinabs.webp" alt="Sinabs" style="width: auto; height: 40mm; max-height: 100%;">
                     </div>
-                    <div style="font-size: 3rem; color: #666;">→</div>
-                    <div style="flex: 1; text-align: center;">
-                      <img src="img/speck.png" alt="Speck" style="width: auto; height: 70mm; max-height: 100%;">
+                    <!-- Row 2: Lava → Loihi -->
+                    <div style="display: flex; align-items: center; gap: 0rem; margin: 0.3rem 0;">
+                        <div style="flex: 1; text-align: center;">
+                            <img src="img/lava.png" alt="Lava" style="width: auto; height: 30mm; max-height: 100%;">
+                        </div>
+                        <div style="font-size: 3rem; color: #666;">→</div>
+                        <div style="flex: 1; text-align: center;">
+                            <img src="img/loihi.jpg" alt="Loihi" style="width: auto; height: 60mm; max-height: 100%;">
+                        </div>
                     </div>
-                  </div>
-                  <!-- Row 2: Lava → Loihi -->
-                  <div style="display: flex; align-items: center; gap: 0rem; margin: 0.3rem 0;">
-                    <div style="flex: 1; text-align: center;">
-                      <img src="img/lava.png" alt="Lava" style="width: auto; height: 30mm; max-height: 100%;">
+                    <!-- Row 3: PyNN → SpiNNaker -->
+                    <div style="display: flex; align-items: center; gap: 0rem; margin: 0.3rem 0;">
+                        <div style="flex: 1; text-align: center;">
+                            <img src="img/pynn.png" alt="PyNN" style="width: auto;">
+                        </div>
+                        <div style="font-size: 3rem; color: #666;">→</div>
+                        <div style="flex: 1; text-align: center;">
+                            <img src="img/spinnaker.jpg" alt="SpiNNaker"
+                                style="width: auto; height: 60mm; max-height: 100%;">
+                        </div>
                     </div>
-                    <div style="font-size: 3rem; color: #666;">→</div>
-                    <div style="flex: 1; text-align: center;">
-                      <img src="img/loihi.jpg" alt="Loihi" style="width: auto; height: 60mm; max-height: 100%;">
-                    </div>
-                  </div>
-                  <!-- Row 3: PyNN → SpiNNaker -->
-                  <div style="display: flex; align-items: center; gap: 0rem; margin: 0.3rem 0;">
-                    <div style="flex: 1; text-align: center;">
-                      <img src="img/pynn.png" alt="PyNN" style="width: auto;">
-                    </div>
-                    <div style="font-size: 3rem; color: #666;">→</div>
-                    <div style="flex: 1; text-align: center;">
-                      <img src="img/spinnaker.jpg" alt="SpiNNaker" style="width: auto; height: 60mm; max-height: 100%;">
-                    </div>
-                  </div>
                 </section>
                 <section>
                   <h2><u> Hardware Representation</u> </h2>
@@ -247,9 +292,142 @@ Structure:
                 </section>
             </section>
             <section>
-              <section>
-                <h2>Introduction to NIR</h2>
-              </section>
+                <section>
+                    <h2>Introduction to the <br />Neuromorphic Intermediate Representation</h2>
+                    <img src="img/nir_logo.png" alt="NIR Logo" style="width: 500px; height: auto; margin-top: 1rem;">
+                </section>
+                <!-- Historical Context -->
+                <section>
+                    <h2>The Babel Tower of Neuromorphics</h2>
+                    <div class="ecosystem-grid">
+                        <div class="platform-box">
+                            <h3 style="color: white;">Simulators</h3>
+                            <p>BindsNet, Nengo, Norse, snnTorch, Sinabs, Rockpool, Spyx, Lava-dl, ...</p>
+                        </div>
+                        <div class="platform-box">
+                            <h3 style="color: white;">Hardware</h3>
+                            <p>CPUs, GPUs, Intel Loihi, SpiNNaker2, SynSense Speck & Xylo, ...</p>
+                        </div>
+                    </div>
+                    <div class="pain-point">
+                        <strong>Problem:</strong> "Despite a well-established mathematical foundation for neural
+                        dynamics, there exists numerous software and hardware solutions whose variability makes it
+                        difficult to reproduce findings."
+                    </div>
+                </section>
+
+                <section>
+                    <h2>The Cost of Fragmentation</h2>
+                    <div class="benefit-grid">
+                        <div class="benefit-card fragment">
+                            <h4>⏱️ Research Velocity</h4>
+                            <p>Months spent on platform-specific adaptations</p>
+                        </div>
+                        <div class="benefit-card fragment">
+                            <h4>🔄 Reproducibility Crisis</h4>
+                            <p>Studies can't be validated across platforms</p>
+                        </div>
+                        <div class="benefit-card fragment">
+                            <h4>🚧 Innovation Barriers</h4>
+                            <p>Hardware-software co-design slowed by incompatibility</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Not a new problem...</h2>
+                    <ul>
+                        <li class="fragment"> NeuroML (2001): Standardized models. Not widely
+                            adopted for hardware implementations. </li>
+                        <li class="fragment"> NineML (2008): Focused on biological realism but lacked hardware
+                            abstraction. </li>
+                        <li class="fragment"> PyNN (2009): Provided a common API for simulators but didn't address
+                            hardware mapping. </li>
+                    </ul>
+                    <br /><br />
+                    <h2 class="fragment">... if they can, we can too!</h2>
+                    <img src="https://imgs.xkcd.com/comics/standards.png" alt="XKCD Standards"
+                        style="width: 50%; height: auto; margin-top: 1rem;" class="fragment">
+                </section>
+
+                <section>
+                    <h2>Really not a new problem</h2>
+                    <div class="timeline fragment">
+                        <div class="timeline-item">
+                            <h4>1950s-60s</h4>
+                            <p>CPU Fragmentation</p>
+                            <small>IBM, CDC, Burroughs...</small>
+                        </div>
+                        <div class="timeline-arrow">→</div>
+                        <div class="timeline-item">
+                            <h4>1970s-80s</h4>
+                            <p>Standardization</p>
+                            <small>Common instruction sets (x86, RISC, ...)</small>
+                        </div>
+                        <div class="timeline-arrow">→</div>
+                        <div class="timeline-item">
+                            <h4>Today</h4>
+                            <p>Portable Software</p>
+                            <small>Write once, run anywhere</small>
+                        </div>
+                    </div>
+                    <div class="timeline fragment">
+                        <div class="timeline-item">
+                            <h4>2010s</h4>
+                            <p>ML Fragmentation</p>
+                            <small>TensorFlow, PyTorch, Caffe, Theano...</small>
+                        </div>
+                        <div class="timeline-arrow">→</div>
+                        <div class="timeline-item">
+                            <h4>ONNX Era</h4>
+                            <p>Standardization</p>
+                            <small>Intermediate representations</small>
+                        </div>
+                        <div class="timeline-arrow">→</div>
+                        <div class="timeline-item">
+                            <h4>Today</h4>
+                            <p>Seamless Deployment</p>
+                            <small>Train anywhere, deploy everywhere</small>
+                        </div>
+                    </div>
+                    <p class="fragment">What's the common denominator?</p>
+                </section>
+
+                <!-- NIR Design Principles -->
+                <section>
+                    <h2>Instruction axioms</h2>
+                    <ol>
+                        <li>Computational primitives
+                            <ul>
+                                <li>Idealized ODE</li>
+                                <li>Unambiguous parameterization</li>
+                                <li>Composes</li>
+                            </ul>
+                        </li>
+                        <li class="fragment">Graph representation
+                            <ul>
+                                <li>Nodes as primitives</li>
+                                <li>Edges as dataflow</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+
+                <!-- NIR ODE Primitives -->
+
+                <!-- Show graphs -->
+
+                <!-- Existing Platforms + Future Work -->
+            </section>
+            <section>
+                <section>
+                    <h2>Motivating a NIR &rarr; FPGA compiler</h2>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>Compilation demonstration</h2>
+                </section>
             </section>
         </div>
     </div>
