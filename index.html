@@ -68,7 +68,6 @@ Structure:
                     <h1>Approaches to neuromorphic toolchains</h1>
                 </section>
                 <section>
-
                   <h2><u> Neuromorphic Toolchains: What do they do?</u> </h2>
                   <div style="height:0.5cm"></div>
                   <center>
@@ -82,7 +81,7 @@ Structure:
                       <p class="fragment" data-fragment-index="2">Typically, they encode three important parts:</p>
                       <ol style="margin-left: 0; padding-left: 2em;">
                         <li class="fragment" data-fragment-index="3">Network Conception and Simulation.</li>
-                        <li class="fragment" data-fragment-index="4">Network Discretization.</li>
+                        <li class="fragment" data-fragment-index="4">Translation to Hardware Representation.</li>
                         <li class="fragment" data-fragment-index="5">Hardware Execution.</li>
                       </ol>
                     </div>
@@ -94,6 +93,82 @@ Structure:
                     <span class="fragment" data-fragment-index="5" style="font-size: 3em; margin: 0 10px;">&#8594;</span>
                     <img class="fragment" data-fragment-index="5" src="img/hardware.svg" alt="Hardware" style="width: 50%; max-width: 300px;">
                   </div>
+                </section>
+                <section>
+                  <h2><u> Network Simulators</u> </h2>
+                  <div style="height:0.2cm"></div>
+                  <p> The one you pick typically depends on where you're coming from. </p>
+                  <div style="height:0.6cm"></div>
+                  <div style="display: flex; gap: 2rem; align-items: stretch;">
+                    <!-- Left column -->
+                    <div class="fragment" data-fragment-index="1" style="flex: 1; text-align: center;">
+                      <h4>Neuro-science</h4>
+                      <img src="img/brian.png" alt="Image 1" style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
+                      <img src="img/nengo.svg" alt="Image 2" style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
+                    </div>
+
+                    <!-- Dividing line -->
+                    <div style="width: 2px; background: #ccc; margin: 0 1rem;"></div>
+
+                    <!-- Right column -->
+                    <div class="fragment" data-fragment-index="2" style="flex: 1; text-align: center;">
+                      <h4>Machine Learning</h4>
+                      <img src="img/sinabs.webp" alt="Image 1" style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
+                      <img src="img/norse.png" alt="Image 1" style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
+                      <img src="img/lava.png" alt="Image 1" style="width: 100mm; max-width: 100%; height: auto; margin: 1rem auto; display: block;">
+                      <img src="img/pynn.png" alt="Image 1" style="width: 30mm; max-width: 100%; margin: 1rem auto; display: block;">
+                    </div>
+                  </div>
+                </section>
+                <section>
+                  <h2><u> Hardware Representation</u> </h2>
+                  <div style="height:0.2cm"></div>
+                  <p> If your simulator was built for your hardware, you're in a good position.. </p>
+                  <!-- Row 1: Sinabs → Speck -->
+                  <div style="display: flex; align-items: center; gap: 0rem; margin: 0.3rem 0;">
+                    <div style="flex: 1; text-align: center;">
+                      <img src="img/sinabs.webp" alt="Sinabs" style="width: auto; height: 40mm; max-height: 100%;">
+                    </div>
+                    <div style="font-size: 3rem; color: #666;">→</div>
+                    <div style="flex: 1; text-align: center;">
+                      <img src="img/speck.png" alt="Speck" style="width: auto; height: 70mm; max-height: 100%;">
+                    </div>
+                  </div>
+                  <!-- Row 2: Lava → Loihi -->
+                  <div style="display: flex; align-items: center; gap: 0rem; margin: 0.3rem 0;">
+                    <div style="flex: 1; text-align: center;">
+                      <img src="img/lava.png" alt="Lava" style="width: auto; height: 30mm; max-height: 100%;">
+                    </div>
+                    <div style="font-size: 3rem; color: #666;">→</div>
+                    <div style="flex: 1; text-align: center;">
+                      <img src="img/loihi.jpg" alt="Loihi" style="width: auto; height: 60mm; max-height: 100%;">
+                    </div>
+                  </div>
+                  <!-- Row 3: PyNN → SpiNNaker -->
+                  <div style="display: flex; align-items: center; gap: 0rem; margin: 0.3rem 0;">
+                    <div style="flex: 1; text-align: center;">
+                      <img src="img/pynn.png" alt="PyNN" style="width: auto;">
+                    </div>
+                    <div style="font-size: 3rem; color: #666;">→</div>
+                    <div style="flex: 1; text-align: center;">
+                      <img src="img/spinnaker.jpg" alt="SpiNNaker" style="width: auto; height: 60mm; max-height: 100%;">
+                    </div>
+                  </div>
+                </section>
+                <section>
+                  <h2><u> Hardware Representation</u> </h2>
+                  <div style="height:0.2cm"></div>
+                  <p> But neuromorphics is a young field.</p>
+                  <ul>
+                    <li class="fragment"> What if your simulator or hardware doesn't support your model? </li>
+                    <li class="fragment"> What if an iteration of your existing network isn't supported by your simulator or hardware? </li>
+                    <li class="fragment"> What if your hardware doesn't have the representational accuracy required? </li>
+                    <li class="fragment"> What if you no longer have access to the hardware and need to use something else? </li>
+                    <li class="fragment"> How can you evaluate your algorithm across various hardware paradigms? </li>
+                    <li class="fragment"> &hellip; </li>
+                  </ul>
+                  <div style="height:0.5cm"></div>
+                  <p> You're stuck! You need to either port your code to another one
                 </section>
             </section>
             <section>
