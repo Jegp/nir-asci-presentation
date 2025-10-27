@@ -10,9 +10,50 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/monokai.css">
 </head>
 
+<!--
+Structure:
+* 14:20--14:30: (Setup)
+* 14:30--14:40: Context (current pipelines, why they are not interoperable). Speaker: Michail
+* 14:40--15:05: Introduction to NIR. Speaker: Jens
+* 15:05--15:20: From NIR graphs to SpinalHDL abstractions. Speaker: Michail
+* 15:20--15:30: FPGA mapping and core demos. Speaker: Michail
+
+- Introduction to co-design for on-device learning
+
+- Proposed Structure
+    1. Context [10 min]
+       - [1] Neuromorphic toolchains: what do they do?
+       - [3] Top-down hardware design approaches
+       - [3] Bottom-up hardware approaches
+       - [3] Introduce co-design
+    2. Introduction to NIR [25 min]
+       - [3] Historical context: existing IRs
+       - [5] NIR design principles
+       - [5] NIR ODE primitives (example: breaking down LIF)
+       - [5] Show graphs (nirviz)
+       - [3] Existing platforms + future work
+       - [2] Q&A
+    3. NIR Compilation Flow [15 min]
+       - [2] So let's say you want to make an FPGA accalerator...
+       - [4] Why not use NIR's primitives as a component spec?
+       - [4] NIR's graph serves as a good language
+       - [4] Our toolchain & "Our hardware language" (SpinalHDL)
+       - [1] BTW Spiker+ exists
+    4. FPGA mapping demo [10 min]
+       - [2] Pick sinabs, define Affine -> IF 
+       - [2] Show exporting to NIR & JSON
+       - [1] Write a SpinalHDL main function creating an accelerator
+       - [2] Compilation & traces
+       - [3] Oops, it should have been 20 neurons (sinabs -> compile -> traces)
+       -->
 <body>
     <div class="reveal">
         <div class="slides">
+            <section>
+                <h1>Introduction to co-design for on-device learning</h1>
+                <h4>Michail Rontionov, University of Southhampton</h4>
+                <h4>Jens E. Pedersen, Technical University of Denmark</h4>
+            </section>
             <section>
                 <section>
                     <h1>Compiling NIR to FPGAs</h1>
