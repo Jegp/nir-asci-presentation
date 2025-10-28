@@ -463,11 +463,7 @@ Structure:
                             <li class="fragment"> Specification of component computations (primitives).
                             <li class="fragment"> Specification of data flow (graph).
                             <li class="fragment"> Language to describe required and implemented functionality.
-                          </ul>
-                        <li class="fragment"> As NIR is in continuous space, we just need to fill in a few concrete bits.
-                          <ul>
-                            <li class="fragment"> Quantization of data & parameters.
-                            <li class="fragment"> Inputs and outputs of a reference simulator for <em>equivalence verification</em>.
+                            <li class="fragment"> Wide simulator support.
                           </ul>
                       </ol>
                     </div>
@@ -476,17 +472,100 @@ Structure:
                     <img  class="fragment" data-fragment-index="2" src="img/flow.svg" alt="" style="width: 1000px">
                   </div>
               </section>
-                            <section>
+              <section>
                 <h2><u> The inside of a NIR file </u> </h2>
-                <span style="color:red">TODO</span>
+                <div style="height:0.5cm"></div>
+                                <div style="display: flex; gap: 2em; align-items: flex-start;">
+                  <div style="flex: 1;">
+                    <div style="text-align: left;">
+                      <ol style="margin-left: 0; padding-left: 2em;">
+                        <li class="fragment"> Based on the Hirerachical Data Format v5 (HDF5) designed for supercomputing.
+                        <li class="fragment"> "Nodes" specify the primitives and contain parameters <br>
+                           <img  src="img/weights.png" alt="" style="height: 170px">
+                        <li class="fragment"> "Edges" describe the graph in an adjacency list.
+                          <img  src="img/edge.png" alt="" style="height: 170px"> </li>
+                        <li class="fragment"> Ignoring all other advantages, it is a good ready-made format.
+                      </ol>
+                    </div>
+                  </div>
+                  <div style="flex: 1;">
+                    Extract of a NIR file defining a spiking LeNet5
+                    <img  src="img/nirfile.png" alt="" style="width: 70%">
+                  </div>
               </section>
               <section>
                 <h2><u> Using Primitives as a specification </u> </h2>
-                <span style="color:red">TODO</span>
+                <table style="font-size: 0.65em;">
+                  <thead>
+                    <tr>
+                      <th>Primitive</th>
+                      <th>Parameters</th>
+                      <th>Computation</th>
+                      <th>Reset</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="fragment" data-fragment-index="1">
+                      <td><b>Integrator</b></td>
+                      <td>\(R\)</td>
+                      <td>\(\dot{v} = R I\)</td>
+                      <td>-</td>
+                    </tr>
+                    <tr class="fragment" data-fragment-index="1">
+                      <td><b>Spike</b></td>
+                      <td>\(\theta_\text{thr}\)</td>
+                      <td>\(\delta(I - \theta_\text{thr})\)</td>
+                      <td>-</td>
+                    </tr>
+                    <tr class="fragment" data-fragment-index="2">
+                      <td><b>Integrate-and-fire</b></td>
+                      <td>\(R, v_\text{reset}, v_\text{thr}\)</td>
+                      <td><b>Integrator</b>; <b>Spike</b></td>
+                      <td>\(\begin{cases} v_\text{reset} & \text{Spike} \\ v & \text{else} \end{cases}\)</td>
+                    </tr>
+                    <tr class="fragment" data-fragment-index="3">
+                      <td><b>Leaky integrator (LI)</b></td>
+                      <td>\(\tau, R, v_\text{leak}\)</td>
+                      <td>\(\tau \dot{v} = (v_\text{leak} - v) + R I\)</td>
+                      <td>-</td>
+                    </tr>
+                    <tr class="fragment" data-fragment-index="4">
+                      <td><b>Leaky integrate-fire (LIF)</b></td>
+                      <td>\(\tau, R, v_\text{leak}, v_\text{reset}, v_\text{thr}\)</td>
+                      <td><b>LI</b>; <b>Spike</b></td>
+                      <td>\(\begin{cases} v_\text{reset} & \text{Spike} \\ v & \text{else} \end{cases}\)</td>
+                    </tr>
+                    <tr class="fragment" data-fragment-index="5">
+                      <td><b>Current-based leaky integrate-and-fire</b></td>
+                      <td>\(\tau_\text{syn}, \tau_\text{mem}, R, v_\text{leak}, v_\text{reset}, v_\text{thr}, w_\text{in}\)</td>
+                      <td><b>LI</b>; <b>Linear</b>; <b>LIF</b></td>
+                      <td>\(\begin{cases} v_\text{reset} & \text{Spike} \\ v_\text{LIF} & \text{else} \end{cases}\)</td>
+                    </tr>
+                    <tr class="fragment" data-fragment-index="6">
+                      <td><b>Linear</b></td>
+                      <td>\(W\)</td>
+                      <td>\(W I\)</td>
+                      <td>-</td>
+                    </tr>
+                    <tr class="fragment" data-fragment-index="6">
+                      <td><b>Affine</b></td>
+                      <td>\(W, b\)</td>
+                      <td>\(W \cdot I + b\)</td>
+                      <td>-</td>
+                    </tr>
+                    <tr class="fragment" data-fragment-index="6">
+                      <td><b>Convolution</b></td>
+                      <td>\(W\), Stride, Padding, Dilation, Groups, Bias</td>
+                      <td>\(f \star g\)</td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
               </section>
               <section>
-                <h2><u> How the graph describes computation? </u> </h2>
-                <span style="color:red">TODO</span>
+                <h2><u> Using the graph to describe dataflow </u> </h2>
+
+
               </section>
               <section>
                 <h2><u> Using NIR to communicate your hardware's capabilities </u> </h2>
@@ -496,7 +575,6 @@ Structure:
               <h2><u> Our Compiler and Toolchain </u> </h2>
               <img  src="img/new-toolchain.svg" alt="" style="width: 2000px">
             </section>
-
             </section>
             <section>
               <section>
@@ -511,10 +589,11 @@ Structure:
             <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/markdown/markdown.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/highlight.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/math/math.js"></script>
             <script>
               Reveal.initialize({
                   hash: true,
-                  plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+                  plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX],
                   width: 1920,
                   height: 1080
               });
