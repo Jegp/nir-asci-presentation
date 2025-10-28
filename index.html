@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/monokai.css">
 
     <style>
+        .column-wrapper {
+            display: flex;
+            gap: 2rem;
+            align-items: stretch;
+        }
+        .column {
+            flex: 1;
+        }
+
         .ecosystem-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -41,6 +50,13 @@
             font-size: 2rem;
             color: #667eea;
         }
+		.credit {
+			font-size: 50%;
+		}
+		.credit,
+		.credit a {
+			color: gray;
+		}
     </style>
 </head>
 
@@ -302,26 +318,13 @@ Structure:
                 </section>
                 <!-- Historical Context -->
                 <section>
-                    <h2>The Babel Tower of Neuromorphics</h2>
-                    <div class="ecosystem-grid">
-                        <div class="platform-box">
-                            <h3 style="color: white;">Simulators</h3>
-                            <p>BindsNet, Nengo, Norse, snnTorch, Sinabs, Rockpool, Spyx, Lava-dl, ...</p>
-                        </div>
-                        <div class="platform-box">
-                            <h3 style="color: white;">Hardware</h3>
-                            <p>CPUs, GPUs, Intel Loihi, SpiNNaker2, SynSense Speck & Xylo, ...</p>
-                        </div>
-                    </div>
-                    <div class="pain-point">
-                        <strong>Problem:</strong> "Despite a well-established mathematical foundation for neural
-                        dynamics, there exists numerous software and hardware solutions whose variability makes it
-                        difficult to reproduce findings."
-                    </div>
+					<img src="img/how_to_scale.png" style="height: 20%;"/>
+					<img src="img/missing_pieces.png" style="width: 100%;" class="fragment"/>
+					<p class="credit">Kudithipudi et al., 2025</p>
                 </section>
 
                 <section>
-                    <h2>The Cost of Fragmentation</h2>
+                    <h2>The cost of fragmentation</h2>
                     <div class="benefit-grid">
                         <div class="benefit-card fragment">
                             <h4>⏱️ Research Velocity</h4>
@@ -354,6 +357,7 @@ Structure:
                         style="width: 50%; height: auto; margin-top: 1rem;" class="fragment">
                 </section>
 
+                <!-- NIR Design Principles -->
                 <section>
                     <h2>Really not a new problem</h2>
                     <div class="timeline fragment">
@@ -394,34 +398,144 @@ Structure:
                             <small>Train anywhere, deploy everywhere</small>
                         </div>
                     </div>
-                    <p class="fragment">What's the common denominator?</p>
+                    <h2 class="fragment">Why did this work?</h2>
                 </section>
-
-                <!-- NIR Design Principles -->
+				<section>
+					<h3>Compiler correctness</h3>
+					<img src="img/next_700.png"/ class="r-stretch">
+					<p class="credit">Morris, 1973; Patterson and Adhmed, 2019</p>
+					<div class="fragment">
+						<img src="img/when_compute.png" />
+						<p class="credit">"When does a physical system compute?", Horsman et al. 2014</p>
+					</div>
+				</section>
                 <section>
-                    <h2>Instruction axioms</h2>
-                    <ol>
-                        <li>Computational primitives
-                            <ul>
-                                <li>Idealized ODE</li>
-                                <li>Unambiguous parameterization</li>
-                                <li>Composes</li>
-                            </ul>
-                        </li>
-                        <li class="fragment">Graph representation
-                            <ul>
-                                <li>Nodes as primitives</li>
-                                <li>Edges as dataflow</li>
-                            </ul>
-                        </li>
-                    </ol>
+                    <h2>NIR instruction axioms</h2>
+                    <div class="column-wrapper">
+                        <ol class="column" style="flex: 2;">
+                            <li class="fragmentation">Computational primitives
+                                <ul>
+                                    <li class="fragment">Continuos-time ODEs <span class="fragment">(as opposed to discrete instructions)</span></li>
+                                    <li class="fragment">Typed primitives <span class="fragment">(as opposed to random strings)</span></li>
+                                    <li class="fragment">Composes <span class="fragment">(as opposed to textual descriptions)</span></li>
+                                </ul>
+                            </li>
+                            <li class="fragment">Graph representation
+                                <ul>
+                                    <li>Nodes as primitives <span class="fragment">(as opposed to declarations)</span></li>
+                                    <li>Edges as dataflow <span class="fragment">(as opposed to sequences)</span></li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <div class="column">
+                            <img src="img/nir_ir.svg" style="width: 50%;"/>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- NIR ODE Primitives -->
+                <section>
+                  <h3>Reproducible computation</h3>
+                  <h5 class="fragment" data-fragment-index="0">Neuron equations are based on <b>idealized</b>
+                    continuous-time models</h5>
+
+                  <p class="fragment" data-fragment-index="0">Leaky-integrator: &nbsp; $\dot{v} = (v_{leak} - v) + R
+                    I$</p>
+                  <img src="img/lif_comparison.svg" class="fragment" />
+                </section>
+
+                <section>
+                    <h2>Composing and decomposing primitives</h2>
+                    <p>$\text{LIF} = \text{LI} \circ \text{Spike} \circ \text{Reset}$</p>
+                    <img src="img/lif_graph.svg">
+                </section>
 
                 <!-- Show graphs -->
 
+                <section>
+                  <h2>NIR in practice</h2>
+                  <img src="img/norse_logo.png" style="height: 100px; margin:0; vertical-align: middle;" />
+                  $\to$ SynSense Speck <img src="img/speck.png" style="height: 130px; margin:0 1em; vertical-align: middle;" />
+                  <br />
+                  <br />
+                  <h4 class="fragment" data-fragment-index="0">Norse $\rightarrow$ NIR</h4>
+                  <pre class="fragment" data-fragment-index="0"><code data-trim data-noescape data-line-numbers="1|3|5">import norse.torch as norse
+
+model = norse.SequentialState( ... )
+
+nir_model = norse.to_nir(model, torch.randn(1, 10))
+        </code></pre>
+          <h4 class="fragment">NIR $\rightarrow$ SynSense Sinabs</h4>
+          <pre class="fragment"><code data-trim data-noescape data-line-numbers="1|3">import sinabs.from_nir
+
+sinabs_model = sinabs.from_nir(nir_model, batch_size=4)
+                </code></pre>
+
+                  <br />
+                </section>
+                 <section>
+                  <h2>Example graphs</h2>
+                  <img src="img/cnn_graph.svg">
+                  <img class="fragment" src="img/srnn_graph.svg">
+                  <img class="fragment" src="img/nir_results.png" style="width: 100%; margin-top: 1rem;">
+                 </section>
+
+                <section data-background-color="white" data-transition="fade">
+                  <h3>Not perfect!</h3>
+                  <span class="fragment" data-fragment-index="0">Similarity for spiking CNN activity</span>
+                  <div style="display: flex; justify-content: center; align-items: center;">
+                    <img src="img/conv_similarity.png" style="width:70%;" data-fragment-index="0" class="fragment" />
+                    <ul style="font-size: 90%; margin-left: 1.6em; width: 70%;">
+                      <li class="fragment fade-in-then-semi-out">NIR reproduces ideal model</li>
+                      <li class="fragment fade-in-then-semi-out" style="margin: 0.8em 0;">Exposes discretization
+                        mismatch</li>
+                      <li class="fragment fade-in-then-semi-out">Allows platform-specific optimization
+                        <ul>
+                          <li class="fragment fade-in-then-semi-out">Tailored integration</li>
+                          <li class="fragment fade-in-then-semi-out">Quantization aware training</li>
+                          <li class="fragment fade-in-then-semi-out">Post-training quantization</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+                 
                 <!-- Existing Platforms + Future Work -->
+                 <section>
+                  <h2>Supported frameworks</h2>
+                  <div class="column-wrapper">
+                      <div class="column">
+                        <h4>5 hardware platforms</h4>
+                        BrainScales-2, Intel Loihi, SynSense Speck, SynSense Xylo, SpiNNaker2
+                    </div>
+                      <div class="column">
+                        <h4>9 simulators</h4>
+                      hxtorch, jaxsnn, Lava-DL, Nengo, Norse, Rockpool, Sinabs, snnTorch, Spyx
+                      </div>
+                  </div>
+                  <p class="fragment">More in development...</p>
+                  <img class="fragment" src="img/nir_platforms.png" style="width: 100%; margin-top: 1rem;">
+                 </section>
+
+                 <section>
+                  <h2>Towards a neuromorphic compiler</h2>
+                  <div class="fragment">
+                    <p>NIR gives us:</p>
+                    <ul>
+                      <li class="fragment">Declarative and <i>typed</i> primitives</li>
+                      <li class="fragment">Comparable computations across platforms</li>
+                      <li class="fragment">Reproducible and transferrable results</li>
+                    </ul>
+                  </div>
+                  <div class="fragment">
+                    <p>Which enables:</p>
+                    <ul>
+                      <li class="fragment">Hardware-software co-design</li>
+                      <li class="fragment">Cross-platform evaluation</li>
+                      <li class="fragment">Rapid prototyping of neuromorphic hardware</li>
+                    </ul>
+                  </div>
+                 </section>
             </section>
             <section>
               <section>
