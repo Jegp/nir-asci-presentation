@@ -250,8 +250,8 @@ Structure:
                     <!-- Column 1 -->
                     <div class="fragment" data-fragment-index="1" style="flex: 1; text-align: center;">
                       <img src="img/memristor.png" alt="Image 1" style="width: 100%; max-width: 500px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">
-                      <p style="font-size: 0.9em; margin: 0.5rem 0;">Analogue Memristor Arrays <br> (1024 synapses)</p>
-                      <p style="font-size: 0.7em; color: #666; margin: 0;">Ongoing work at University of Southampton</p>
+                      <p style="font-size: 0.9em; margin: 0.5rem 0;">Analogue Memristor Arrays <br> 1024 synapses <br> LTP/LTD </p>
+                      <p style="font-size: 0.6em; color: #666; margin: 0;">Ongoing work at University of Southampton</p>
                     </div>
 
                     <!-- Dividing line 1 -->
@@ -260,8 +260,8 @@ Structure:
                     <!-- Column 2 -->
                     <div class="fragment" data-fragment-index="2" style="flex: 1; text-align: center;">
                       <img src="img/odin.png" alt="Image 2" style="width: 100%; max-width: 500px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">
-                      <p style="font-size: 0.9em; margin: 0.5rem 0;">ODIN on ASIC <br> (64k synapses, 256 neurons)</p>
-                      <p style="font-size: 0.7em; color: #666; margin: 0;">Frenkel, Charlotte, et al. "A 0.086-mm&sup2; 12.7-pJ/SOP 64k-synapse 256-neuron online-learning digital spiking neuromorphic processor in 28-nm CMOS." IEEE transactions on biomedical circuits and systems 13.1 (2018): 145-158.</p>
+                      <p style="font-size: 0.9em; margin: 0.5rem 0;">ODIN on ASIC <br> 64k synapses, 256 neurons <br> SDSP </p>
+                      <p style="font-size: 0.6em; color: #666; margin: 0;">Frenkel, Charlotte, et al. "A 0.086-mm&sup2; 12.7-pJ/SOP 64k-synapse 256-neuron online-learning digital spiking neuromorphic processor in 28-nm CMOS." IEEE transactions on biomedical circuits and systems 13.1 (2018): 145-158.</p>
                     </div>
 
                     <!-- Dividing line 2 -->
@@ -271,7 +271,7 @@ Structure:
                     <div class="fragment" data-fragment-index="3" style="flex: 1; text-align: center;">
                       <img src="img/spinnbig.jpg" alt="Image 3" style="width: 100%; max-width: 700px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">
                       <p style="font-size: 0.9em; margin: 0.5rem 0;">SpiNNaker with ARM <br> (up to 1B neurons & 1T synapses)</p>
-                      <p style="font-size: 0.7em; color: #666; margin: 0;">Furber, Steve B., et al. "The spinnaker project." Proceedings of the IEEE 102.5 (2014): 652-665.</p>
+                      <p style="font-size: 0.6em; color: #666; margin: 0;">Furber, Steve B., et al. "The spinnaker project." Proceedings of the IEEE 102.5 (2014): 652-665.</p>
                     </div>
                   </div>
                 </section>
@@ -282,7 +282,7 @@ Structure:
                   <div style="display: flex; gap: 2rem; align-items: flex-start;">
                     <!-- Column 1 -->
                     <div class="fragment" data-fragment-index="1" style="flex: 1; text-align: center;">
-                      <img src="img/speck1.png" alt="Image 1" style="width: 100%; max-width: 500px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">                      <p style="font-size: 0.9em; margin: 0.5rem 0;">SPECK <br> Spiking CNN for Sinabs </p>
+                      <img src="img/speck.png" alt="Image 1" style="width: 100%; max-width: 500px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">                      <p style="font-size: 0.9em; margin: 0.5rem 0;">SPECK <br> Spiking RCNN for Sinabs </p>
                       <p style="font-size: 0.6em; color: #666; margin: 0;">Richter, Ole, et al. "Speck: A smart event-based vision sensor with a low latency 327k neuron convolutional neuronal network processing pipeline." arXiv preprint arXiv:2304.06793 (2023).
 </p>
                     </div>
@@ -291,8 +291,8 @@ Structure:
                     <div style="width: 2px; background: #ccc;"></div>
 
                     <div class="fragment" data-fragment-index="2" style="flex: 1; text-align: center;">
-                      <img src="img/spoon.png" alt="Image 1" style="width: 100%; max-width: 500px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">                      <p style="font-size: 0.9em; margin: 0.5rem 0;">SPOON <br> Spiking CNN with RTDP Learning</p>
-                      <p style="font-size: 0.6em; color: #666; margin: 0;">Frenkel, Charlotte, Jean-Didier Legat, and David Bol. "A 28-nm convolutional neuromorphic processor enabling online learning with spike-based retinas." 2020 IEEE International Symposium on Circuits and Systems (ISCAS). IEEE, 2020.</p>
+                      <img src="img/reckon.png" alt="Image 1" style="width: 100%; max-width: 700px; height: 500px; object-fit: contain; margin-bottom: 0.5rem;">                      <p style="font-size: 0.9em; margin: 0.5rem 0;">ReckON <br> Spiking CNN with RTDP Learning</p>
+                      <p style="font-size: 0.6em; color: #666; margin: 0;">Frenkel, Charlotte, and Giacomo Indiveri. "ReckOn: A 28nm sub-mm2 task-agnostic spiking recurrent neural network processor enabling on-chip learning over second-long timescales." 2022 IEEE International Solid-State Circuits Conference (ISSCC). Vol. 65. IEEE, 2022.</p>
                     </div>
 
                     <!-- Dividing line 2 -->
@@ -743,6 +743,14 @@ sinabs_model = sinabs.from_nir(nir_model, batch_size=4)
             <section>
               <h2><u> Our Compiler and Toolchain </u> </h2>
               <img  src="img/new-toolchain.svg" alt="" style="width: 2000px">
+            </section>
+            <section>
+              <h2><u> Future work </u> </h2>
+              All about learning.
+              <ul>
+                <li> Toolchain support for Jaxsnn integration for learning.
+                <li> NIR support for online learning primitives.
+              </ul>
             </section>
             </section>
             <section>
