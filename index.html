@@ -86,7 +86,7 @@ Structure:
         <div class="slides">
             <section>
                 <h1>Introduction to co-design <br /> for on-device learning</h1>
-                <h4>Michail Rontionov, University of Southhampton</h4>
+                <h4>Michail Rontionov, University of Southampton</h4>
                 <h4>Jens E. Pedersen, Technical University of Denmark</h4>
             </section>
             <section>
@@ -262,7 +262,7 @@ Structure:
 
                 <section>
                   <h2><u> Top-Down </u> </h2>
-                  <p> Dedicated & optimized to a specific algorithm. </p>
+                  <p> Dedicated & optimised to a specific algorithm. </p>
                   <div style="display: flex; gap: 2rem; align-items: flex-start;">
                     <!-- Column 1 -->
                     <div class="fragment" data-fragment-index="1" style="flex: 1; text-align: center;">
@@ -512,7 +512,7 @@ Structure:
                       <td>-</td>
                     </tr>
                     <tr class="fragment" data-fragment-index="1">
-                      <td><b>Spike</b></td>
+                      <td><b>Threshold</b></td>
                       <td>\(\theta_\text{thr}\)</td>
                       <td>\(\delta(I - \theta_\text{thr})\)</td>
                       <td>-</td>
@@ -520,7 +520,7 @@ Structure:
                     <tr class="fragment" data-fragment-index="2">
                       <td><b>Integrate-and-fire</b></td>
                       <td>\(R, v_\text{reset}, v_\text{thr}\)</td>
-                      <td><b>Integrator</b>; <b>Spike</b></td>
+                      <td><b>Integrator</b>; <b>Threshold</b></td>
                       <td>\(\begin{cases} v_\text{reset} & \text{Spike} \\ v & \text{else} \end{cases}\)</td>
                     </tr>
                     <tr class="fragment" data-fragment-index="3">
@@ -532,7 +532,7 @@ Structure:
                     <tr class="fragment" data-fragment-index="4">
                       <td><b>Leaky integrate-fire (LIF)</b></td>
                       <td>\(\tau, R, v_\text{leak}, v_\text{reset}, v_\text{thr}\)</td>
-                      <td><b>LI</b>; <b>Spike</b></td>
+                      <td><b>LI</b>; <b>Threshold</b></td>
                       <td>\(\begin{cases} v_\text{reset} & \text{Spike} \\ v & \text{else} \end{cases}\)</td>
                     </tr>
                     <tr class="fragment" data-fragment-index="5">
@@ -564,12 +564,67 @@ Structure:
               </section>
               <section>
                 <h2><u> Using the graph to describe dataflow </u> </h2>
-
-
+                <div style="height:0.5cm"></div>
+                Typical execution graph, similar to the popular ONNX format in ML. <br>
+                <div style="height:0.5cm"></div>
+                <h4> Spiking LeNet5 in NIR's Graph </h4>
+                <img  src="img/lenet5-1.svg" alt="" style="width: 50%">
               </section>
               <section>
-                <h2><u> Using NIR to communicate your hardware's capabilities </u> </h2>
-                <span style="color:red">TODO</span>
+                <h2><u> Using NIR to communicate hardware capabilities </u> </h2>
+                <div style="height:0.5cm"></div>
+                <div style="display: flex; gap: 2em; align-items: flex-start;">
+                  <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
+                    <div style="text-align: left;">
+                      <ol style="margin-left: 0; padding-left: 2em;">
+                        <li class="fragment"> You now have freedom to determine how algorithmically flexible your hardware is.
+                          <ul>
+                            <li class="fragment"> One extreme is total flexibility, where you implement each primitive individually.
+                            <li class="fragment"> The other is hardware efficiency, where you can specify that you implement an entire network only.
+                          </ul>
+                        <li class="fragment"> You can do this by specifying which NIR <strong>subgraphs</strong> your hardware supports, and can be communicated at the simulator's NIR export level.
+                        <li class="fragment"> Both top-down and bottom-up approaches can be captured, <em>as long as they conform to NIR</em>.
+                      </ol>
+                    </div>
+                  </div>
+                  <div style="flex: 1;">
+                  <div style="display: flex; align-items: center; gap: 1rem;">
+                    <!-- Left bracket -->
+                    <div style="font-size: 30rem; line-height: 0.5; color: #333;">{</div>
+
+                    <!-- Images in rows -->
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                      <img src="img/nodes1.svg" alt="" style="height: 100px">
+                      <img src="img/nodes2.svg" alt="" style="height: 100px">
+                      <img src="img/nodes3.svg" alt="" style="height: 100px">
+                      <img src="img/nodes4.svg" alt="" style="height: 100px">
+                      <img src="img/nodes5.svg" alt="" style="height: 100px">
+                    </div>
+
+                    <!-- Right bracket -->
+                    <div style="font-size: 30rem; line-height: 0.5; color: #333;">}</div>
+                  </div>
+                  </div>
+              </section>
+              <section>
+                <h2><u>Addressing NIR's discretization problem</u></h2>
+                <ol>
+                  <li> Problem: NIR is defined with ODEs -- continuous space.
+                  <li class="fragment"> This is future-proof for analog hardware (e.g. memristors, photonics).
+                  <li class="fragment"> But our current digital hardware (such as FPGAs) are finite. We have to make a assumptions to compile a NIR graph to an FPGA.
+                  <li class="fragment"> <em>Short-term</em> solution:
+                    <ul>
+                      <li> Just use an internal simulator.
+                      <li> Provide an interface to discretization choices (e.g. integration method)
+                      <li> Simulate the NIR graph in a simulator with those dicretizations.
+                      <li> Record input/output values to verify the hardware.
+                    </ul>
+                  <li class="fragment"> <em>Long-term</em> solution:
+                    <ul>
+                      <li> Include either within the NIR graph or as external system.
+                      <li> Future work.
+                    </ul>
+                </ol>
               </section>
             <section>
               <h2><u> Our Compiler and Toolchain </u> </h2>
@@ -579,6 +634,8 @@ Structure:
             <section>
               <section>
                 <h2>Compilation demonstration</h2>
+                <div style="height:0.5cm"></div>
+                <em>It's a work in progress, please excuse the roughness. </em>
               </section>
             </section>
 
